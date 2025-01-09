@@ -9,5 +9,5 @@ This repository contains various configuration files and scripts for setting up 
 Use `yadm` to manage the dotfiles. Install `yadm` from [yadm.io](https://yadm.io/):
    ```sh
     brew install yadm &&
-    yadm clone https://github.com/overclockedllama/dotfiles.git
+    yadm clone https://github.com/erinjkim43/dots.git
    ```
