@@ -149,5 +149,23 @@ alias pa='php artisan'
 # composer global bin
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 
+# define editor of choice
+export EDITOR=nvim
+
+# yazi - Move to CWD when exiting yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 # Recommended: Instant prompt. Should stay close to the bottom of ~/.zshrc.
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
