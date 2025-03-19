@@ -83,7 +83,6 @@ plugins=(
   git
   zsh-syntax-highlighting 
   zsh-autosuggestions 
-  zsh-vim-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -133,16 +132,6 @@ bindkey '^[[B' history-search-forward
 # ---- Eza (better ls) -----
 alias ls="eza --icons=always"
 
-# bun completions
-[ -s "/Users/erinjkim/.bun/_bun" ] && source "/Users/erinjkim/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# gh copilot
-eval "$(gh copilot alias -- zsh)"
-
 # php artisan
 alias pa='php artisan'
 
@@ -161,6 +150,20 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# Enable Vi Mode in CLI
+bindkey -v
+
+# Better history settings
+SAVEHIST=10000
+HISTSIZE=10000
+
+# Vim-like history navigation
+bindkey -M vicmd 'k' history-search-backward
+bindkey -M vicmd 'j' history-search-forward
+
+# Quick edit & reload zshrc
+alias vzsh="nvim ~/.zshrc && source ~/.zshrc"
 
 # Recommended: Instant prompt. Should stay close to the bottom of ~/.zshrc.
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
