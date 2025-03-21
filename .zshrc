@@ -172,3 +172,4 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
