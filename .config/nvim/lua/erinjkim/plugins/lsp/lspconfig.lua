@@ -135,6 +135,26 @@ return {
 			end,
 		})
 
+		-- Global diagnostic keybindings (available everywhere)
+		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+		vim.keymap.set("n", "<leader>e", function()
+			vim.diagnostic.open_float({ focusable = true })
+		end, { desc = "Show diagnostic [E]rror messages" })
+		vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+		-- Configure diagnostic display with rounded border
+		vim.diagnostic.config({
+			float = {
+				border = "rounded",
+				source = "always",
+				header = "",
+				prefix = "",
+			},
+		})
+
+		-- LSP hover and signature help are now handled by noice.nvim
+
 		-- Change diagnostic symbols in the sign column (gutter)
 		if vim.g.have_nerd_font then
 			local signs = { ERROR = "", WARN = "", INFO = "", HINT = "" }
@@ -162,23 +182,11 @@ return {
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
-			-- clangd = {},
-			-- gopls = {},
-			-- pyright = {},
-			-- rust_analyzer = {},
-			-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-			--
-			-- Some languages (like typescript) have entire language plugins that can be useful:
-			--    https://github.com/pmizio/typescript-tools.nvim
-			--
-			-- But for many setups, the LSP (`ts_ls`) will work just fine
+			-- TypeScript/JavaScript
 			ts_ls = {},
-			--
-
+			
+			-- Lua
 			lua_ls = {
-				-- cmd = { ... },
-				-- filetypes = { ... },
-				-- capabilities = {},
 				settings = {
 					Lua = {
 						completion = {
@@ -189,13 +197,13 @@ return {
 					},
 				},
 			},
+			
+			-- PHP
+			intelephense = {},
+			
+			-- CSS/HTML
+			tailwindcss = {},
 		}
-
-		-- PHP
-		require("lspconfig").intelephense.setup({})
-		require("lspconfig").pint.setup({})
-
-		require("lspconfig").tailwindcss.setup({})
 
 		-- Ensure the servers and tools above are installed
 		--  To check the current status of installed tools and/or manually install
@@ -213,17 +221,10 @@ return {
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		require("mason-lspconfig").setup({
-			handlers = {
-				function(server_name)
-					local server = servers[server_name] or {}
-					-- This handles overriding only values explicitly passed
-					-- by the server configuration above. Useful when disabling
-					-- certain features of an LSP (for example, turning off formatting for ts_ls)
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
-				end,
-			},
-		})
+		-- Manually setup servers instead of using mason-lspconfig handlers
+		for server_name, server_config in pairs(servers) do
+			server_config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_config.capabilities or {})
+			require("lspconfig")[server_name].setup(server_config)
+		end
 	end,
 }

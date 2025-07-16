@@ -46,3 +46,12 @@ vim.keymap.set(
 	":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
 	{ desc = "Search and replace on current word" }
 )
+
+-- Close all floating windows
+vim.keymap.set("n", "<leader>cf", function()
+	for _, win in pairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_config(win).relative == "editor" then
+			vim.api.nvim_win_close(win, false)
+		end
+	end
+end, { desc = "Close all floating windows" })
