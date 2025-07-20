@@ -173,3 +173,6 @@ export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
+
+# Created by `pipx` on 2025-07-05 02:06:25
+export PATH="$PATH:/Users/erin/.local/bin"
