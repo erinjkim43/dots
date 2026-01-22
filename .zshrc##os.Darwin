@@ -1,4 +1,4 @@
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -165,6 +165,46 @@ bindkey -M vicmd 'j' history-search-forward
 # Quick edit & reload zshrc
 alias vzsh="nvim ~/.zshrc && source ~/.zshrc"
 
+# ---- Clear alias ----
+alias c="clear"
+
+# ---- Global aliases (can be used anywhere in a command) ----
+alias -g C='| pbcopy'        # copy output to clipboard: echo "hi" C
+alias -g G='| grep'          # pipe to grep: ps aux G nginx
+alias -g L='| less'          # pipe to pager: cat big-file.txt L
+alias -g H='| head'          # show first lines: cat file.txt H
+alias -g T='| tail'          # show last lines: cat file.txt T
+alias -g S='| sort'          # sort output: ls S
+alias -g JQ='| jq'           # parse JSON: curl api.com JQ
+alias -g WC='| wc -l'        # count lines: ls WC
+alias -g NE='2>/dev/null'    # hide errors: find / -name "foo" NE
+alias -g NUL='>/dev/null 2>&1'  # silence everything: noisy-cmd NUL
+
+# ---- Directory navigation ----
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# ---- Common directories ----
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias dp="cd ~/Documents/GitHub"
+
+# ---- Useful shortcuts ----
+alias reload="source ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
+alias tmuxconfig="nvim ~/.tmux.conf"
+
+# ---- Make directory and cd into it ----
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# ---- Better ls aliases (using eza) ----
+alias ll="eza -la --icons=always"
+alias la="eza -a --icons=always"
+alias lt="eza --tree --level=2 --icons=always"
+
 # Recommended: Instant prompt. Should stay close to the bottom of ~/.zshrc.
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
@@ -173,6 +213,3 @@ export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
-
-# Created by `pipx` on 2025-07-05 02:06:25
-export PATH="$PATH:/Users/erin/.local/bin"
