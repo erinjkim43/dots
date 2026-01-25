@@ -186,14 +186,27 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 
 # ---- Common directories ----
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias dp="cd ~/Documents/GitHub"
+alias down="cd ~/Downloads"
+alias desk="cd ~/Desktop"
+alias docu="cd ~/Documents/GitHub"
 
 # ---- Useful shortcuts ----
 alias reload="source ~/.zshrc"
 alias zshconfig="nvim ~/.zshrc"
 alias tmuxconfig="nvim ~/.tmux.conf"
+
+# Reload zshrc in all tmux panes across all sessions
+reload-all() {
+  if [[ -n "$TMUX" ]]; then
+    for pane_id in $(tmux list-panes -a -F '#{pane_id}'); do
+      tmux send-keys -t "$pane_id" "source ~/.zshrc" Enter
+    done
+    echo "Reloaded zshrc in all tmux panes"
+  else
+    source ~/.zshrc
+    echo "Reloaded zshrc (not in tmux)"
+  fi
+}
 
 # ---- Make directory and cd into it ----
 mkcd() {
