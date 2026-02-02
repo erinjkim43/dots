@@ -6,8 +6,14 @@ return {
     vim.o.timeoutlen = 500
   end,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    spec = {
+      { "<leader>e", group = "explorer" },
+      { "<leader>f", group = "find" },
+      { "<leader>g", group = "git" },
+      { "<leader>h", group = "git hunks" },
+      { "<leader>s", group = "session/split" },
+      { "<leader>t", group = "tabs/toggle" },
+      { "<leader>x", group = "trouble" },
+    },
   },
 }

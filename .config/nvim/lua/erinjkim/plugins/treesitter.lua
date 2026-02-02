@@ -42,13 +42,13 @@ return {
 				"query",
 				"vimdoc",
 				"c",
-				"php_only",
+				"php",
 			},
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
+					init_selection = "<C-s>",
+					node_incremental = "<C-s>",
 					scope_incremental = false,
 					node_decremental = "<bs>",
 				},

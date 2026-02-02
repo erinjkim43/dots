@@ -1,5 +1,7 @@
 vim.cmd("let g:netrw_liststyle = 3")
 
+vim.g.have_nerd_font = true
+
 local opt = vim.opt
 
 opt.relativenumber = true

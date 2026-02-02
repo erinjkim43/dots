@@ -4,130 +4,122 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal Neovim configuration built with Lua, using the Lazy.nvim plugin manager. The configuration is organized in a modular structure under the `lua/erinjkim/` namespace.
+Personal Neovim configuration built with Lua, using Lazy.nvim plugin manager. Organized under `lua/erinjkim/` namespace.
 
 ## Architecture
 
-### Core Structure
 - `init.lua`: Entry point that loads core configuration and lazy plugin manager
-- `lua/erinjkim/core/`: Core Neovim configuration
-  - `init.lua`: Loads options and keymaps
-  - `options.lua`: Vim options (tabs, search, appearance, etc.)
-  - `keymaps.lua`: Global keymaps and leader key configuration
-- `lua/erinjkim/lazy.lua`: Lazy.nvim plugin manager setup and configuration
-- `lua/erinjkim/plugins/`: Plugin configurations (each plugin in its own file)
+- `lua/erinjkim/core/options.lua`: Vim options (2-space tabs, relative line numbers, etc.)
+- `lua/erinjkim/core/keymaps.lua`: Global keymaps (leader key is Space)
+- `lua/erinjkim/lazy.lua`: Lazy.nvim plugin manager setup
+- `lua/erinjkim/plugins/`: Plugin configurations (one file per plugin)
+- `lua/erinjkim/plugins/lsp/`: LSP-related plugins (lspconfig.lua)
 
-### Plugin Management
-Uses Lazy.nvim for plugin management with automatic plugin loading from:
-- `lua/erinjkim/plugins/` directory
-- `lua/erinjkim/plugins/lsp/` directory for LSP-related plugins
+### LSP & Formatting
 
-### Key Configuration Details
-
-#### Leader Key
-- Space (`" "`) is set as the leader key
-
-#### LSP Configuration
-- Uses Mason for LSP server management
-- Configured language servers: TypeScript (`ts_ls`), Lua (`lua_ls`), PHP (`intelephense`, `pint`), TailwindCSS
-- LSP keybindings are automatically set up when LSP attaches to a buffer
-
-#### Formatting & Linting
-- **Formatting**: Uses `conform.nvim` with formatters:
-  - JavaScript/TypeScript: prettier
+- **Mason** manages LSP servers: `ts_ls`, `lua_ls`, `intelephense`, `tailwindcss`
+- **conform.nvim** handles formatting (format on save enabled):
+  - JS/TS/CSS/HTML/JSON/YAML/Markdown: prettier
   - Lua: stylua
   - PHP: pint
-  - Python: isort, black
-  - Format on save is enabled
-- **Linting**: Uses `nvim-lint` with linters:
-  - JavaScript/TypeScript: eslint_d
-  - Python: pylint
-
-#### File Navigation
-- **Telescope**: Primary fuzzy finder
-  - `<leader>ff`: Find files
-  - `<leader>fs`: Live grep
-  - `<leader>fc`: Grep string under cursor
-  - `<leader>ft`: Find todos
-- **Nvim-tree**: File explorer
-- **Harpoon**: Quick file navigation
+  - Python: isort + black
+- **nvim-lint**: eslint_d (JS/TS), pylint (Python)
 
 ## Key Mappings
 
-### Core Mappings
+### General
+
 - `jk`: Exit insert mode
-- `<CR>`: Change word under cursor (normal mode)
+- `<CR>`: Change word under cursor
 - `<leader>nh`: Clear search highlights
 - `<leader>s`: Search and replace current word
-- `J`/`K`: Move selected lines up/down (visual mode)
+- `<leader>+/-`: Increment/decrement number
+- `<leader>cf`: Close all floating windows
+- `<leader>tw`: Toggle line wrap
+- `J`/`K` (visual): Move selected lines up/down
 
-### Window Management
-- `<leader>sv`: Split window vertically
-- `<leader>sh`: Split window horizontally
-- `<leader>se`: Make splits equal size
-- `<leader>sx`: Close current split
+### File Navigation (Telescope)
 
-### Tab Management
-- `<leader>to`: Open new tab
-- `<leader>tx`: Close current tab
-- `<leader>tn`: Next tab
-- `<leader>tp`: Previous tab
+- `<leader>ff`: Find files
+- `<leader>fs`: Live grep
+- `<leader>fc`: Grep string under cursor
+- `<leader>ft`: Find todos
+- `<leader>fR`: Recent files
+- `<leader>fr`: Resume last search
 
-### LSP Mappings (when LSP is attached)
-- `gd`: Go to definition
+### File Explorer (nvim-tree)
+
+- `<leader>ee`: Toggle file explorer
+- `<leader>ef`: Find current file in explorer
+- `<leader>ec`: Collapse explorer
+- `<leader>er`: Refresh explorer
+
+### Harpoon (quick file access)
+
+- `<leader>a`: Mark file
+- `<C-p>`: Toggle quick menu
+- `<leader>h/j/k/l`: Navigate to marked files 1-4
+
+### LSP (buffer-local when attached)
+
+- `gd`/`gD`: Go to definition/declaration
 - `gr`: Go to references
 - `gI`: Go to implementation
 - `<leader>D`: Type definition
+- `<leader>ds`: Document symbols
+- `<leader>ws`: Workspace symbols
 - `<leader>rn`: Rename symbol
 - `<leader>ca`: Code action
+- `<leader>th`: Toggle inlay hints
+- `[d`/`]d`: Previous/next diagnostic
+- `<leader>e`: Show diagnostic float
+- `<leader>q`: Open diagnostic quickfix
 
-## Configuration Preferences
+### Trouble (diagnostics)
 
-### Editor Settings
-- Relative line numbers enabled
-- 2-space indentation (tabs expanded to spaces)
-- No line wrapping
-- Case-smart search
-- Cursor line highlighting
-- No swap files
-- 15-line scroll offset
+- `<leader>xw`: Workspace diagnostics
+- `<leader>xd`: Document diagnostics
+- `<leader>xq`: Quickfix list
+- `<leader>xl`: Location list
+- `<leader>xt`: Todos
 
-### Plugins in Use
-- **Telescope**: Fuzzy finder and picker
-- **Nvim-tree**: File explorer
-- **Treesitter**: Syntax highlighting and parsing
-- **LSP**: Language server protocol support
-- **Nvim-cmp**: Autocompletion
-- **Gitsigns**: Git integration
-- **Lualine**: Status line
-- **Bufferline**: Buffer/tab line
-- **Harpoon**: File navigation
-- **Trouble**: Diagnostics viewer
-- **Which-key**: Keybinding hints
+### Window/Tab Management
 
-## Development Workflow
+- `<leader>sv/sh`: Split vertically/horizontally
+- `<leader>se`: Equalize splits
+- `<leader>sx`: Close split
+- `<leader>to/tx/tn/tp/tf`: Tab new/close/next/prev/current-to-new
 
-When making changes to this configuration:
+### Formatting & Linting
 
-1. **Plugin changes**: Edit files in `lua/erinjkim/plugins/`
-2. **Core settings**: Modify `lua/erinjkim/core/options.lua` or `lua/erinjkim/core/keymaps.lua`
-3. **LSP changes**: Edit `lua/erinjkim/plugins/lsp/lspconfig.lua`
-4. **Formatting/Linting**: Update `lua/erinjkim/plugins/formatting.lua` or `lua/erinjkim/plugins/linting.lua`
+- `<leader>mp`: Manual format (normal or visual mode)
+- `<leader>l`: Trigger linting
 
-The configuration automatically reloads when files are saved thanks to Lazy.nvim's change detection.
+### Git (Fugitive)
 
-## Testing Configuration
+- `<leader>gg`: Git status
+- `<leader>gp`: Git push
+- `<leader>gl`: Git pull
+- `<leader>gB`: Git blame
 
-To test changes:
-1. Restart Neovim or use `:source %` on modified files
-2. Use `:Lazy` to check plugin status
-3. Use `:Mason` to manage LSP servers and tools
-4. Use `:checkhealth` to diagnose any issues
+### Session Management
 
-## Custom Features
+- `<leader>sr`: Restore session
+- `<leader>ss`: Save session
 
-- **Blade template support**: Custom syntax highlighting for Laravel Blade templates
-- **Auto-session**: Session management for project persistence
-- **Early retirement**: Plugin for unused code detection
-- **Supermaven**: AI-powered code completion
-- **Copilot**: GitHub Copilot integration
+### Treesitter
+
+- `<C-s>`: Start/expand incremental selection
+- `<bs>`: Shrink selection
+
+### Tmux Navigation
+
+- `<C-h/j/k/l>`: Navigate between vim/tmux panes
+
+## Testing Changes
+
+1. Restart Neovim or `:source %` on modified files
+2. `:Lazy` - check plugin status
+3. `:Mason` - manage LSP servers
+4. `:checkhealth` - diagnose issues
+

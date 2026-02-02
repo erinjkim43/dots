@@ -208,6 +208,18 @@ reload-all() {
   fi
 }
 
+# Clear all tmux panes across all sessions
+clear-all() {
+  if [[ -n "$TMUX" ]]; then
+    for pane_id in $(tmux list-panes -a -F '#{pane_id}'); do
+      tmux send-keys -t "$pane_id" "clear" Enter
+    done
+    echo "Cleared all tmux panes"
+  else
+    clear
+  fi
+}
+
 # ---- Make directory and cd into it ----
 mkcd() {
   mkdir -p "$1" && cd "$1"

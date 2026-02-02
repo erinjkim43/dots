@@ -1,10 +1,10 @@
 return {
-	{
-		"tpope/vim-fugitive",
-		config = function()
-			-- set keymaps
-			local keymap = vim.keymap -- for conciseness
-			keymap.set("n", "<leader>G", ":G<CR>") -- git status
-		end,
+	"tpope/vim-fugitive",
+	cmd = { "Git", "G" },
+	keys = {
+		{ "<leader>gg", "<cmd>Git<cr>", desc = "Git status" },
+		{ "<leader>gp", "<cmd>Git push<cr>", desc = "Git push" },
+		{ "<leader>gl", "<cmd>Git pull<cr>", desc = "Git pull" },
+		{ "<leader>gB", "<cmd>Git blame<cr>", desc = "Git blame" },
 	},
 }
