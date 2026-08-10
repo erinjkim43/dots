@@ -2,7 +2,8 @@ set -g default-terminal "screen-256color"
 set-option -sa terminal-features ',alacritty:RGB' # for alacritty
 
 # if run as "tmux attach", create a session if one does not already exist
-new-session -n $HOST
+# (guarded so reloading the config doesn't spawn stray sessions)
+if-shell "tmux has-session 2>/dev/null" "" "new-session -n '$HOST'"
 
 # horizontal split
 unbind %
