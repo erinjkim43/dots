@@ -13,6 +13,16 @@ vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }
 vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+vim.keymap.set("n", "<leader>sm", function()
+	-- maximize/restore current split (vim-maximizer is unmaintained)
+	if vim.t.maximized_restore then
+		vim.cmd(vim.t.maximized_restore)
+		vim.t.maximized_restore = nil
+	else
+		vim.t.maximized_restore = vim.fn.winrestcmd()
+		vim.cmd("wincmd _ | wincmd |")
+	end
+end, { desc = "Maximize/minimize a split" })
 
 -- tab management
 vim.keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
@@ -23,12 +33,12 @@ vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current bu
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+--  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank() -- vim.highlight was renamed to vim.hl in 0.11
 	end,
 })
 

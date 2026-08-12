@@ -3,16 +3,16 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
-		{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
-		"williamboman/mason-lspconfig.nvim",
+		-- (mason moved from williamboman/* to the mason-org org with v2)
+		{ "mason-org/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 		-- Useful status updates for LSP.
 		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 		{ "j-hui/fidget.nvim", opts = {} },
 
-		-- Allows extra capabilities provided by nvim-cmp
-		"hrsh7th/cmp-nvim-lsp",
+		-- Allows extra capabilities provided by blink.cmp
+		"saghen/blink.cmp",
 	},
 	config = function()
 		-- Brief aside: **What is LSP?**
@@ -136,8 +136,13 @@ return {
 		})
 
 		-- Global diagnostic keybindings (available everywhere)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+		-- goto_prev/goto_next are deprecated since 0.11 in favor of jump()
+		vim.keymap.set("n", "[d", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end, { desc = "Go to previous diagnostic" })
+		vim.keymap.set("n", "]d", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end, { desc = "Go to next diagnostic" })
 		vim.keymap.set("n", "<leader>e", function()
 			vim.diagnostic.open_float({ focusable = true })
 		end, { desc = "Show diagnostic [E]rror messages" })
@@ -153,8 +158,6 @@ return {
 			},
 		})
 
-		-- LSP hover and signature help are now handled by noice.nvim
-
 		-- Change diagnostic symbols in the sign column (gutter)
 		if vim.g.have_nerd_font then
 			local signs = { ERROR = "", WARN = "", INFO = "", HINT = "" }
@@ -167,10 +170,9 @@ return {
 
 		-- LSP servers and clients are able to communicate to each other what features they support.
 		--  By default, Neovim doesn't support everything that is in the LSP specification.
-		--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-		--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+		--  blink.cmp adds completion capabilities on top of Neovim's defaults,
+		--  and we broadcast that to the servers.
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		-- Enable the following language servers
 		--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.

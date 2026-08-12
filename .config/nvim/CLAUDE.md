@@ -17,7 +17,10 @@ Personal Neovim configuration built with Lua, using Lazy.nvim plugin manager. Or
 
 ### LSP & Formatting
 
-- **Mason** manages LSP servers: `ts_ls`, `lua_ls`, `intelephense`, `tailwindcss`
+- LSP configured via native `vim.lsp.config()` / `vim.lsp.enable()` (nvim 0.11+ API); nvim-lspconfig provides per-server defaults only
+- **Mason** (mason-org, v2) manages LSP servers: `vtsls`, `lua_ls`, `intelephense`, `tailwindcss`
+- **blink.cmp** for completion (friendly-snippets via native `vim.snippet`; blade-nav registered as a blink source)
+- **nvim-treesitter on the `main` branch** (parsers compiled locally; requires `tree-sitter-cli` from brew); highlight/indent enabled per-buffer via FileType autocmd in `plugins/treesitter.lua`
 - **conform.nvim** handles formatting (format on save enabled):
   - JS/TS/CSS/HTML/JSON/YAML/Markdown: prettier
   - Lua: stylua
@@ -109,8 +112,8 @@ Personal Neovim configuration built with Lua, using Lazy.nvim plugin manager. Or
 
 ### Treesitter
 
-- `<C-s>`: Start/expand incremental selection
-- `<bs>`: Shrink selection
+- `an` / `in` (visual): Expand selection outward/inward by node (native nvim 0.12 incremental selection)
+- `]n` / `[n` (visual): Move selection across sibling nodes
 
 ### Tmux Navigation
 
