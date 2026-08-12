@@ -217,11 +217,19 @@ return {
 
 		-- You can add other tools here that you want Mason to install
 		-- for you, so that they are available from within Neovim.
-		local ensure_installed = vim.tbl_keys(servers or {})
-		vim.list_extend(ensure_installed, {
-			"stylua", -- Used to format Lua code
+		--
+		-- NOTE: these are mason registry package names, not lspconfig server
+		-- names (translating between the two was mason-lspconfig's job, which
+		-- is no longer a dependency)
+		require("mason-tool-installer").setup({
+			ensure_installed = {
+				"vtsls",
+				"lua-language-server", -- lua_ls
+				"intelephense",
+				"tailwindcss-language-server", -- tailwindcss
+				"stylua", -- Used to format Lua code
+			},
 		})
-		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		-- Configure and enable servers via the native vim.lsp.config API
 		-- (nvim-lspconfig is still a dependency: it provides the default configs
