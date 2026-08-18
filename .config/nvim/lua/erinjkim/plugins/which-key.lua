@@ -11,6 +11,7 @@ return {
       { "<leader>f", group = "find" },
       { "<leader>g", group = "git" },
       { "<leader>h", group = "git hunks" },
+      { "<leader>i", group = "ai" },
       { "<leader>s", group = "session/split" },
       { "<leader>t", group = "tabs/toggle" },
       { "<leader>x", group = "trouble" },
