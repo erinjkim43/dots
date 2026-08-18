@@ -221,10 +221,12 @@ return {
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		-- Manually setup servers instead of using mason-lspconfig handlers
+		-- Register overrides and enable servers via the nvim 0.11 API.
+		-- Base cmd/filetypes/root markers still come from nvim-lspconfig's lsp/ configs.
+		vim.lsp.config("*", { capabilities = capabilities })
 		for server_name, server_config in pairs(servers) do
-			server_config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server_config.capabilities or {})
-			require("lspconfig")[server_name].setup(server_config)
+			vim.lsp.config(server_name, server_config)
+			vim.lsp.enable(server_name)
 		end
 	end,
 }
