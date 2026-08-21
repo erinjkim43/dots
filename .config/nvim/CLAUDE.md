@@ -98,12 +98,11 @@ Personal Neovim configuration built with Lua, using Lazy.nvim plugin manager. Or
 - `<leader>mp`: Manual format (normal or visual mode)
 - `<leader>l`: Trigger linting
 
-### Git (Fugitive)
+### Git
 
-- `<leader>gg`: Git status
-- `<leader>gp`: Git push
-- `<leader>gl`: Git pull
-- `<leader>gB`: Git blame
+- `<leader>gg`: LazyGit floating UI (Ctrl+A inside it generates an AI commit message via claude -p)
+- `<leader>gf`: LazyGit history for current file
+- `<leader>hb` / `<leader>hB`: Blame line / toggle inline blame (gitsigns); push and pull happen inside LazyGit (`P` / `p`)
 
 ### Session Management
 

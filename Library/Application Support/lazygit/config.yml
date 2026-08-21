@@ -1,0 +1,18 @@
+customCommands:
+  - key: "<c-a>"
+    description: "AI commit message"
+    context: "files"
+    loadingText: "Asking Claude..."
+    prompts:
+      - type: "menuFromCommand"
+        title: "Pick a commit message"
+        key: "Msg"
+        command: >-
+          claude -p "Write 4 candidate one-line conventional commit messages
+          for this staged diff. Output one message per line, no numbering,
+          no quotes, no other text: $(git diff --cached)"
+      - type: "input"
+        title: "Edit before committing"
+        key: "Final"
+        initialValue: "{{.Form.Msg}}"
+    command: git commit -m {{.Form.Final | quote}}
