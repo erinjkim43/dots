@@ -135,6 +135,9 @@ alias ls="eza --icons=always"
 # php artisan
 alias pa='php artisan'
 
+# lazygit
+alias lg='lazygit'
+
 # composer global bin
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 
