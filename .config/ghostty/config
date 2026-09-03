@@ -51,3 +51,27 @@ palette = 13=#c099ff
 palette = 14=#86e1fc
 palette = 15=#c8d3f5
 mouse-hide-while-typing = true
+
+# Hand cmd+t and cmd+1..9 to the running program (herdr) instead of driving
+# Ghostty's own tabs. Herdr binds them to new_tab / switch_tab.
+keybind = super+t=unbind
+keybind = super+1=unbind
+keybind = super+2=unbind
+keybind = super+3=unbind
+keybind = super+4=unbind
+keybind = super+5=unbind
+keybind = super+6=unbind
+keybind = super+7=unbind
+keybind = super+8=unbind
+keybind = super+9=unbind
+# Ghostty binds each digit twice: a logical `super+N` and a physical
+# `super+digit_N`. Both must go or the physical one still eats the key.
+keybind = super+digit_1=unbind
+keybind = super+digit_2=unbind
+keybind = super+digit_3=unbind
+keybind = super+digit_4=unbind
+keybind = super+digit_5=unbind
+keybind = super+digit_6=unbind
+keybind = super+digit_7=unbind
+keybind = super+digit_8=unbind
+keybind = super+digit_9=unbind
