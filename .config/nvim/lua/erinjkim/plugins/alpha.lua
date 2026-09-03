@@ -1,5 +1,9 @@
+-- Startup dashboard. Disabled: nvim now opens straight to an empty buffer,
+-- which also keeps the herdr-nvim sidebar clean. Flip enabled back to true to
+-- bring the splash screen back; the header and buttons below are preserved.
 return {
   "goolord/alpha-nvim",
+  enabled = false,
   event = "VimEnter",
   config = function()
     local alpha = require("alpha")
