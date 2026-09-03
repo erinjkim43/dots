@@ -1,0 +1,63 @@
+# herdr configuration
+# Keybindings aligned with ~/.tmux.conf habits, plus Herdr-specific shortcuts.
+# Apply edits with: herdr server reload-config   (or prefix+shift+r)
+
+[keys]
+# Same leader as tmux.
+prefix = "ctrl+b"
+
+# --- tmux habits ---
+split_vertical = "prefix+|"        # tmux: bind | split-window -h  (side by side)
+split_horizontal = "prefix+minus"  # tmux: bind - split-window -v  (stacked)
+zoom = "prefix+m"                  # tmux: bind -r m resize-pane -Z
+detach = "prefix+d"                # tmux: prefix+d detaches
+close_pane = "prefix+x"            # tmux: prefix+x kills pane
+
+# --- moved to free prefix+e / prefix+o for the herdr-nvim plugin below ---
+edit_scrollback = "prefix+shift+e"
+open_notification_target = "prefix+shift+o"
+
+# --- pane focus: tmux/vim-tmux-navigator style ---
+# ctrl+h/j/k/l are direct chords. Herdr claims them before nvim, blink-cmp,
+# and Telescope see them. Drop the "ctrl+X" entries if that bites; the
+# ctrl+alt form is the conflict-free chord Herdr's docs recommend.
+focus_pane_left = ["prefix+h", "ctrl+h", "ctrl+alt+h"]
+focus_pane_down = ["prefix+j", "ctrl+j", "ctrl+alt+j"]
+focus_pane_up = ["prefix+k", "ctrl+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+l", "ctrl+alt+l"]
+
+# --- spaces (workspaces): ctrl+1..9 jumps directly, no prefix ---
+switch_workspace = "ctrl+1..9"
+
+# --- agents: ctrl+up / ctrl+down cycle the sidebar agent list ---
+previous_agent = "ctrl+up"
+next_agent = "ctrl+down"
+
+# --- tabs: cmd+1..9 selects, cmd+t creates (leader forms still work) ---
+# Requires Ghostty to hand cmd+t / cmd+1..9 through instead of driving its own
+# tabs: see the matching `keybind = super+...=unbind` lines in
+# ~/.config/ghostty/config. Herdr sees them via the kitty keyboard protocol.
+switch_tab = ["prefix+1..9", "cmd+1..9"]
+new_tab = ["prefix+t", "cmd+t"]
+
+# --- lazygit in a floating popup over the current pane ---
+[[keys.command]]
+key = "prefix+ctrl+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+# --- herdr-nvim: full-height nvim sidebar + agent-touched file picker ---
+# Plugin: github.com/ChmaraX/herdr-nvim
+[[keys.command]]
+key = "prefix+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "open file from agent output"
