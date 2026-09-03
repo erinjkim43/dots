@@ -1,6 +1,21 @@
 set -g default-terminal "screen-256color"
 set-option -sa terminal-features ',alacritty:RGB' # for alacritty
 
+# Forward DCS-wrapped OSC sequences (lets Claude Code notify Ghostty through tmux)
+set -g allow-passthrough on
+
+# Extended keys (modifyOtherKeys / CSI u) are OFF on purpose -- don't re-enable.
+# With them on, tmux runs pasted bytes through its key-encoding path, so the LF
+# in a paste becomes the keypress Ctrl+J and gets re-encoded. nvim is inside a
+# bracketed paste and inserts it literally, leaving a stray ^[[27;5;106~ at every
+# newline. Unfixed upstream: neovim#38021 (blocked-external), tmux#4163/#4663.
+# Cost of leaving it off: Shift+Enter is indistinguishable from Enter.
+set -s extended-keys off
+
+# Notice bells from any window
+set -g monitor-bell on
+set -g bell-action any
+
 # if run as "tmux attach", create a session if one does not already exist
 # (guarded so reloading the config doesn't spawn stray sessions)
 if-shell "tmux has-session 2>/dev/null" "" "new-session -n '$HOST'"
