@@ -1,0 +1,11 @@
+# Herdr runtime state. Only config.toml belongs in version control.
+#
+# plugins/ holds installed plugin trees including compiled binaries, so
+# keeping it out matters more than the rest: a stray `yadm add` here would
+# otherwise commit a Mach-O executable into the dotfiles repo.
+*.log
+*.sock
+.plugins.lock
+plugins.json
+session.json
+plugins/
