@@ -1,0 +1,10 @@
+# Ignore rules for the yadm dotfiles repo.
+#
+# This lives at the worktree root on purpose. A .gitignore only applies to
+# its own directory and below, so the earlier copy at .config/yadm/.gitignore
+# never matched anything: it looked for .config/yadm/.config/raycast/.
+
+# Raycast stores ~250MB of downloaded extensions, assets, and bundled
+# node_modules. Configuration worth keeping lives in Raycast's cloud sync,
+# not here.
+.config/raycast/
